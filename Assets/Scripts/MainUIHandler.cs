@@ -5,11 +5,12 @@ using UnityEngine;
 public class MainUIHandler : MonoBehaviour
 {
     public GameObject inventoryGroup;
-    bool isInventoryOpen = false;
+    bool isInventoryOpen;
 
     void Start()
     {
-        
+        inventoryGroup.SetActive(false);
+        isInventoryOpen = false;
     }
 
     void Update()
