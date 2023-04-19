@@ -28,6 +28,9 @@ public class InventoryManager : MonoBehaviour
             if (itemInSlot == null)
             {
                 SpawnNewItem(item, slot);
+                occupiedSlots++;
+                RefreshInventoryCount();
+
                 return true;
             }
         }
@@ -35,12 +38,20 @@ public class InventoryManager : MonoBehaviour
         return false;
     }
 
+    public void RemoveItem(InventoryItem inventoryItem)
+    {
+        occupiedSlots--;
+        RefreshInventoryCount();
+
+        Destroy(inventoryItem.gameObject);
+    }
+
     void SpawnNewItem(Item item, InventorySlot slot)
     {
         GameObject newItemGO = Instantiate(inventoryItemPrefab, slot.transform);
         InventoryItem inventoryItem = newItemGO.GetComponent<InventoryItem>();
         inventoryItem.InitialiseItem(item);
-    }
+    }    
 
     void InitializeInventoryCount()
     {
