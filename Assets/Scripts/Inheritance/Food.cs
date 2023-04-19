@@ -56,4 +56,9 @@ public class Food : Tree
     {
         return $"Producing at the speed of {m_ProductionSpeed}/s";
     }
+
+    public override string GetProductionCapacity()
+    {
+        return $"Production capacity: {InventorySpace}";
+    }
 }

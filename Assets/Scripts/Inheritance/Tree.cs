@@ -128,9 +128,9 @@ public class Tree : MonoBehaviour, MainUIHandler.ITreeInfoContent
         return "";
     }
 
-    public string GetProductionCapacity()
+    public virtual string GetProductionCapacity()
     {
-        return $"Production capacity: {InventorySpace}";
+        return "";
     }
 
     public string GetProductName()
