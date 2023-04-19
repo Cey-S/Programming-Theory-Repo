@@ -68,7 +68,11 @@ public class PlayerControl : MonoBehaviour
         var itemCount = treeInRange.GetItem(treeInRange.product.id, 1);
         if (itemCount != 0)
         {
-            inventoryManager.AddItem(treeInRange.product);
+            bool isAdded = inventoryManager.AddItem(treeInRange.product);
+            if (!isAdded) // if the inventory is full, return the item back
+            {
+                treeInRange.AddItem(treeInRange.product.id, 1);
+            }
         }
     }
 
