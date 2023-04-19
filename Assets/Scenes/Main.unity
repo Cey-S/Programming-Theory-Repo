@@ -467,6 +467,7 @@ MonoBehaviour:
   - {fileID: 49076357}
   - {fileID: 39094956}
   inventoryItemPrefab: {fileID: 5510295408816217521, guid: 2244c0ec072c3e847aa0e6d8309da12b, type: 3}
+  inventoryCountText: {fileID: 2041539097}
 --- !u!4 &235176112
 Transform:
   m_ObjectHideFlags: 0
@@ -5204,7 +5205,7 @@ GameObject:
   - component: {fileID: 2041539098}
   - component: {fileID: 2041539097}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: InventoryCountText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
