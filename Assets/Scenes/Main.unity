@@ -1226,6 +1226,7 @@ MonoBehaviour:
   playerAnim: {fileID: 1398580937}
   moveSpeed: 5
   turnSpeed: 360
+  inventoryManager: {fileID: 235176111}
 --- !u!65 &512345719
 BoxCollider:
   m_ObjectHideFlags: 0

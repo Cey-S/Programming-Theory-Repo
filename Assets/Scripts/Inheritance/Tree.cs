@@ -38,7 +38,7 @@ public class Tree : MonoBehaviour, MainUIHandler.ITreeInfoContent
 
         if (m_CurrentAmount == maxInventorySpace)
         {
-            produceItem = false;
+            produceItem = false; // stop producing
             return amount;
         }
 
@@ -61,6 +61,31 @@ public class Tree : MonoBehaviour, MainUIHandler.ITreeInfoContent
 
         m_CurrentAmount += addedAmount;
         return amount - addedAmount;
+    }
+
+    //return how much was actually removed, will be 0 if couldn't get any.
+    public int GetItem(string resourceId, int requestAmount)
+    {
+        int found = m_Inventory.FindIndex(item => item.ResourceId == resourceId);
+
+        //couldn't find an entry for that resource id so we add a new one.
+        if (found != -1)
+        {
+            int amount = Mathf.Min(requestAmount, m_Inventory[found].Count);
+            m_Inventory[found].Count -= amount;
+
+            if (m_Inventory[found].Count == 0)
+            {//no more of that resources, so we remove it
+                m_Inventory.RemoveAt(found);
+            }
+
+            m_CurrentAmount -= amount;
+            produceItem = true; // continue to produce
+
+            return amount;
+        }
+
+        return 0;
     }
 
     public void PlayerInRange()

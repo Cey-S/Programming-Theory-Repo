@@ -10,10 +10,22 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private float turnSpeed = 360; // full turn in a second
     private Vector3 input;
 
+    private Tree treeInRange;
+
+    public InventoryManager inventoryManager;
+
     private void Update()
     {
         GatherInput();
         Look();
+
+        if (treeInRange != null)
+        {
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                PickUpProduct();
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -49,6 +61,25 @@ public class PlayerControl : MonoBehaviour
         rb.MovePosition(transform.position + transform.forward * moveSpeed * Time.deltaTime); // * input.normalized.magnitude
         playerAnim.SetBool("Static_b", true);
         playerAnim.SetFloat("Speed_f", 0.3f);
+    }
+
+    private void PickUpProduct()
+    {
+        var itemCount = treeInRange.GetItem(treeInRange.product.id, 1);
+        if (itemCount != 0)
+        {
+            inventoryManager.AddItem(treeInRange.product);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        treeInRange = other.GetComponent<Tree>();
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        treeInRange = null;
     }
 }
 

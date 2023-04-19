@@ -30,6 +30,10 @@ public class Food : Tree
         {
             ProduceItem();
         }
+        else
+        {
+            m_CurrentProduction = 0.0f;
+        }
     }
 
     void ProduceItem()
