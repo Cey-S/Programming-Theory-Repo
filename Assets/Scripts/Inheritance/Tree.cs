@@ -128,6 +128,11 @@ public class Tree : MonoBehaviour, MainUIHandler.ITreeInfoContent
         return "";
     }
 
+    public string GetProductionCapacity()
+    {
+        return $"Production capacity: {InventorySpace}";
+    }
+
     public string GetProductName()
     {
         return $"Product: {product.id}";
@@ -136,5 +141,5 @@ public class Tree : MonoBehaviour, MainUIHandler.ITreeInfoContent
     public Sprite GetProductIcon()
     {
         return product.image;
-    }
+    }    
 }

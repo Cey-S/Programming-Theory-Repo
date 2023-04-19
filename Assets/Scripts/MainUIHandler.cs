@@ -11,6 +11,7 @@ public class MainUIHandler : MonoBehaviour
     public GameObject treeInfoPopUpGroup;
     public Text treeName;
     public Text productionInfo;
+    public Text productionCapacity;
     public Text productName;
     public Image productIcon;
     public Text productCount;
@@ -22,6 +23,7 @@ public class MainUIHandler : MonoBehaviour
     {
         string GetTreeName();
         string GetProductionInfo();
+        string GetProductionCapacity();
         string GetProductName();
         Sprite GetProductIcon();
 
@@ -102,6 +104,7 @@ public class MainUIHandler : MonoBehaviour
     {
         treeName.text = treeInfo.GetTreeName();
         productionInfo.text = treeInfo.GetProductionInfo();
+        productionCapacity.text = treeInfo.GetProductionCapacity();
         productName.text = treeInfo.GetProductName();
         productIcon.sprite = treeInfo.GetProductIcon();
     }
