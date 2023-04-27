@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 394404960490387208}
   - component: {fileID: 394404960490387207}
   - component: {fileID: 394404960490387206}
+  - component: {fileID: 104689599}
   m_Layer: 0
   m_Name: Tree_Pine
   m_TagString: Untagged
@@ -61,6 +62,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3, y: 4, z: 3}
   m_Center: {x: 0, y: 2, z: 0}
+--- !u!114 &104689599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 394404960490387205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 224bd682a7dabc0428afe06799b83a37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  product: {fileID: 11400000, guid: 723b13a4425fe44488c3981ca068c48c, type: 2}
+  interactionTextPrefab: {fileID: 6459060831010031563, guid: 5fe19578149ab0444aa3faad82b8bb27, type: 3}
+  parentCanvas: {fileID: 0}
+  InventorySpace: 100
 --- !u!1001 &394404959474722615
 PrefabInstance:
   m_ObjectHideFlags: 0

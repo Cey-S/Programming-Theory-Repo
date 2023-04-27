@@ -329,48 +329,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 93825351}
   m_CullTransparentMesh: 1
---- !u!1 &104689595 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 394404960490387205, guid: 31cd851307986da45a9a9eabd518633b, type: 3}
-  m_PrefabInstance: {fileID: 394404959722328480}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &104689599
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 104689595}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 224bd682a7dabc0428afe06799b83a37, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  product: {fileID: 11400000, guid: 723b13a4425fe44488c3981ca068c48c, type: 2}
-  interactionTextPrefab: {fileID: 6459060831010031563, guid: 5fe19578149ab0444aa3faad82b8bb27, type: 3}
-  parentCanvas: {fileID: 863433613}
-  InventorySpace: 100
---- !u!1 &228740523 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 412011504379493157, guid: 51449ff7da1747547ae1601da0ab6b8b, type: 3}
-  m_PrefabInstance: {fileID: 412011505313607279}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &228740527
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 228740523}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 224bd682a7dabc0428afe06799b83a37, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  product: {fileID: 11400000, guid: 627a14b100e1333408462c614ebdbd05, type: 2}
-  interactionTextPrefab: {fileID: 6459060831010031563, guid: 5fe19578149ab0444aa3faad82b8bb27, type: 3}
-  parentCanvas: {fileID: 863433613}
-  InventorySpace: 100
 --- !u!1001 &229950099
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6379,6 +6337,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 104689599, guid: 31cd851307986da45a9a9eabd518633b, type: 3}
+      propertyPath: parentCanvas
+      value: 
+      objectReference: {fileID: 863433613}
     - target: {fileID: 394404960490387205, guid: 31cd851307986da45a9a9eabd518633b, type: 3}
       propertyPath: m_Name
       value: Tree_Pine
@@ -6436,6 +6398,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 228740527, guid: 51449ff7da1747547ae1601da0ab6b8b, type: 3}
+      propertyPath: parentCanvas
+      value: 
+      objectReference: {fileID: 863433613}
     - target: {fileID: 412011504379493154, guid: 51449ff7da1747547ae1601da0ab6b8b, type: 3}
       propertyPath: m_RootOrder
       value: 19
