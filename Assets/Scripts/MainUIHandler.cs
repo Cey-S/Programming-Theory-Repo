@@ -5,9 +5,11 @@ using UnityEngine.UI;
 
 public class MainUIHandler : MonoBehaviour
 {
+    [Header("Inventory UI")]
     public GameObject inventoryGroup;
     bool isInventoryOpen;
 
+    [Header("Tree UI")]
     public GameObject treeInfoPopUpGroup;
     public Text treeName;
     public Text productionInfo;
@@ -18,6 +20,28 @@ public class MainUIHandler : MonoBehaviour
     bool isTreeInfoOpen;
 
     Tree selectedTree;
+
+    [Header("Quest UI")]
+    public GameObject questBoardGroup;
+    public Text questTitle;
+    public Text questDescription;
+    public Text questReward;
+
+    public QuestBoard questBoard;
+
+    public interface IQuestInfoContent
+    {
+        string GetQuestTitle();
+        string GetQuestDescription();
+        string GetQuestReward();
+    }
+
+    public void SetQuestBoardContent(IQuestInfoContent questInfo)
+    {
+        questTitle.text = questInfo.GetQuestTitle();
+        questDescription.text = questInfo.GetQuestDescription();
+        questReward.text = questInfo.GetQuestReward();
+    }
 
     public interface ITreeInfoContent
     {
@@ -36,6 +60,8 @@ public class MainUIHandler : MonoBehaviour
         isInventoryOpen = false;
 
         treeInfoPopUpGroup.SetActive(false);
+
+        SetQuestBoardContent(questBoard.GetComponent<IQuestInfoContent>());
     }
 
     void Update()
