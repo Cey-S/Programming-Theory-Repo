@@ -27,7 +27,7 @@ public class QuestGenerator : MonoBehaviour
 
     public Quest GetQuest()
     {
-        Quest quest = new Quest(); // initialize empty quest to fill and return at the end
+        Quest quest = new Quest(); // initialize empty quest to fill
 
         int randomQuestType = Random.Range(0, 2);
         
@@ -39,47 +39,13 @@ public class QuestGenerator : MonoBehaviour
             quest.title = "Wood Needed!";
 
             // Set quest items
-            for (int i = 0; i < woodItems.Count; i++)
-            {
-                int amount = Random.Range(0, 6); // 6 because of 10 inventory slots
-                if(amount != 0)
-                {
-                    quest.questItems.Add(new QuestItem()
-                    {
-                        Name = woodItems[i],
-                        Amount = amount
-                    });
-
-                    quest.totalSlotsNeeded += amount;
-                }
-            }
-
-            if (quest.questItems.Count == 0) // if random amount was 0 every time
-            {
-                int type = Random.Range(0, woodItems.Count);
-                int amount = Random.Range(1, 11);
-                quest.questItems.Add(new QuestItem()
-                {
-                    Name = woodItems[type],
-                    Amount = amount
-                });
-
-                quest.totalSlotsNeeded += amount;
-            }
+            GenerateQuestItems(quest, woodItems, 6);
 
             // Set description
-            string description = quest.questItems.Count == 1 ? $"{quest.questItems[0].Amount} {quest.questItems[0].Name}"
-                : $"{quest.questItems[0].Amount} {quest.questItems[0].Name} and {quest.questItems[1].Amount} {quest.questItems[1].Name}";
-            
-            quest.description += description;
+            GenerateQuestDescription(quest);
 
             // Set reward
-            int reward = 0;
-            foreach (QuestItem item in quest.questItems)
-            {
-                reward += item.Amount * rewardMultiplier;
-            }
-            quest.coinReward = reward;
+            GenerateQuestReward(quest);
         }
         else
         {
@@ -88,74 +54,84 @@ public class QuestGenerator : MonoBehaviour
             // Set title
             quest.title = "Food Needed!";
 
-            int totalAmount = 0;
             // Set quest items
-            for (int i = 0; i < foodItems.Count; i++)
-            {
-                int amount = Random.Range(0, 4);
-                totalAmount += amount;
-
-                if (amount != 0 && totalAmount <= 10) // total num of inventory slots
-                {
-                    quest.questItems.Add(new QuestItem()
-                    {
-                        Name = foodItems[i],
-                        Amount = amount
-                    });
-
-                    quest.totalSlotsNeeded += amount;
-                }
-                else
-                {
-                    totalAmount -= amount; // did not add the previous item
-                }
-            }
-
-            if (quest.questItems.Count == 0) // if random amount was 0 every time
-            {
-                int type = Random.Range(0, foodItems.Count);
-                int amount = Random.Range(1, 11);
-                quest.questItems.Add(new QuestItem()
-                {
-                    Name = foodItems[type],
-                    Amount = amount
-                });
-
-                quest.totalSlotsNeeded += amount;
-            }
+            GenerateQuestItems(quest, foodItems, 4);
 
             // Set description
-            string description = "";
-            for (int i = 0; i < quest.questItems.Count; i++)
-            {
-                if (quest.questItems.Count != 1 && i == quest.questItems.Count - 1) // before the last item
-                {
-                    description += " and ";
-                }
-
-                description += quest.questItems[i].Amount + " " + quest.questItems[i].Name;
-
-                if (i + 1 < quest.questItems.Count - 1)
-                {
-                    description += ", ";
-                }
-            }
-            quest.description += description;
+            GenerateQuestDescription(quest);
 
             // Set reward
-            int reward = 0;
-            foreach (QuestItem item in quest.questItems)
-            {
-                reward += item.Amount * rewardMultiplier;
-            }
-            quest.coinReward = reward;
+            GenerateQuestReward(quest);
         }
 
-        return quest;
+        return quest; // return now filled quest
     }
 
-    private void GenerateWoodQuest()
+    private void GenerateQuestReward(Quest quest)
     {
+        int reward = 0;
+        foreach (QuestItem item in quest.questItems)
+        {
+            reward += item.Amount * rewardMultiplier;
+        }
+        quest.coinReward = reward;
+    }
 
+    private void GenerateQuestDescription(Quest quest)
+    {
+        string description = "";
+        for (int i = 0; i < quest.questItems.Count; i++)
+        {
+            if (quest.questItems.Count != 1 && i == quest.questItems.Count - 1) // before the last item
+            {
+                description += " and ";
+            }
+
+            description += quest.questItems[i].Amount + " " + quest.questItems[i].Name;
+
+            if (i + 1 < quest.questItems.Count - 1)
+            {
+                description += ", ";
+            }
+        }
+        quest.description += description;
+    }
+
+    private void GenerateQuestItems(Quest quest, List<string> items, int maxNumPerItem)
+    {
+        int totalAmount = 0;
+        for (int i = 0; i < items.Count; i++)
+        {
+            int amount = Random.Range(0, maxNumPerItem);
+            totalAmount += amount;
+
+            if (amount != 0 && totalAmount <= 10) // total num of inventory slots
+            {
+                quest.questItems.Add(new QuestItem()
+                {
+                    Name = items[i],
+                    Amount = amount
+                });
+            }
+            else
+            {
+                totalAmount -= amount; // did not add the previous item because of inventory capacity
+            }
+        }
+
+        if (quest.questItems.Count == 0) // if random amount was 0 every time
+        {
+            int type = Random.Range(0, items.Count);
+            int amount = Random.Range(1, 11);
+            quest.questItems.Add(new QuestItem()
+            {
+                Name = items[type],
+                Amount = amount
+            });
+
+            totalAmount += amount;
+        }
+
+        quest.totalSlotsNeeded = totalAmount;
     }
 }
