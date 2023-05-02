@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class MainUIHandler : MonoBehaviour
 {
@@ -46,6 +47,8 @@ public class MainUIHandler : MonoBehaviour
         questTitle.text = questBoard.GetQuestTitle();
         questDescription.text = questBoard.GetQuestDescription();
         questReward.text = questBoard.GetQuestReward();
+
+        questBoard.RefreshItemSlots();
     }
 
     public interface ITreeInfoContent
@@ -107,7 +110,8 @@ public class MainUIHandler : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
-            bool isOverUI = UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
+            // Check if the mouse was clicked over a UI element
+            bool isOverUI = EventSystem.current.IsPointerOverGameObject();
             if (!isOverUI)
             {
                 if (hit.transform.CompareTag("QuestBoard"))
@@ -137,13 +141,10 @@ public class MainUIHandler : MonoBehaviour
                     isTreeInfoOpen = false;
                 }
             }
-            else
-            {
-                Debug.Log("pointer is over a UI element");
-            }
         }
         else
         {
+            questBoardGroup.SetActive(false);
             treeInfoPopUpGroup.SetActive(false);
             isTreeInfoOpen = false;
         }

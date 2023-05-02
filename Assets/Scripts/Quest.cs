@@ -17,6 +17,7 @@ public class Quest
     public string personName;
     public int coinReward;
     public List<QuestItem> questItems = new List<QuestItem>();
+    public int totalSlotsNeeded;
 
     public QuestGoal goal;
 }

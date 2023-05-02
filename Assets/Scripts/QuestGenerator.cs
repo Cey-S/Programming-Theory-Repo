@@ -49,6 +49,8 @@ public class QuestGenerator : MonoBehaviour
                         Name = woodItems[i],
                         Amount = amount
                     });
+
+                    quest.totalSlotsNeeded += amount;
                 }
             }
 
@@ -61,6 +63,8 @@ public class QuestGenerator : MonoBehaviour
                     Name = woodItems[type],
                     Amount = amount
                 });
+
+                quest.totalSlotsNeeded += amount;
             }
 
             // Set description
@@ -98,6 +102,8 @@ public class QuestGenerator : MonoBehaviour
                         Name = foodItems[i],
                         Amount = amount
                     });
+
+                    quest.totalSlotsNeeded += amount;
                 }
                 else
                 {
@@ -114,6 +120,8 @@ public class QuestGenerator : MonoBehaviour
                     Name = foodItems[type],
                     Amount = amount
                 });
+
+                quest.totalSlotsNeeded += amount;
             }
 
             // Set description

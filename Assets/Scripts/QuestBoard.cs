@@ -6,6 +6,8 @@ public class QuestBoard : MonoBehaviour
 {
     public QuestGenerator generator;
 
+    public InventorySlot[] itemDropSlots;
+
     List<Quest> quests = new List<Quest>();
     int currentQuest;
 
@@ -16,6 +18,24 @@ public class QuestBoard : MonoBehaviour
         quests.Add(generator.GetQuest());
 
         currentQuest = 0;
+    }
+
+    public void RefreshItemSlots()
+    {
+        int currentSlot = 0;
+        foreach (InventorySlot slot in itemDropSlots)
+        {
+            if (currentSlot < quests[currentQuest].totalSlotsNeeded)
+            {
+                slot.gameObject.SetActive(true);
+            }
+            else
+            {
+                slot.gameObject.SetActive(false);
+            }
+
+            currentSlot++;
+        }
     }
 
     public string GetQuestDescription()
