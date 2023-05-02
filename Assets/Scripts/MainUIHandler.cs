@@ -107,32 +107,39 @@ public class MainUIHandler : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
-
-            if (hit.transform.CompareTag("QuestBoard"))
+            bool isOverUI = UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
+            if (!isOverUI)
             {
-                questBoardGroup.SetActive(true);
-                SetQuestBoardContent();
+                if (hit.transform.CompareTag("QuestBoard"))
+                {
+                    questBoardGroup.SetActive(true);
+                    SetQuestBoardContent();
+                }
+                else //if (hit.transform.CompareTag("Tree"))
+                {
+                    questBoardGroup.SetActive(false);
+                }
+
+                //var tree = hit.collider.GetComponent<Tree>();
+                selectedTree = hit.collider.GetComponent<Tree>();
+
+                if (selectedTree != null)
+                {
+                    treeInfoPopUpGroup.SetActive(true);
+                    isTreeInfoOpen = true;
+
+                    ITreeInfoContent treeInfo = selectedTree.GetComponent<ITreeInfoContent>();
+                    SetTreeInfoContent(treeInfo);
+                }
+                else
+                {
+                    treeInfoPopUpGroup.SetActive(false);
+                    isTreeInfoOpen = false;
+                }
             }
             else
             {
-                questBoardGroup.SetActive(false);
-            }
-
-            //var tree = hit.collider.GetComponent<Tree>();
-            selectedTree = hit.collider.GetComponent<Tree>();
-
-            if (selectedTree != null)
-            {
-                treeInfoPopUpGroup.SetActive(true);
-                isTreeInfoOpen = true;
-
-                ITreeInfoContent treeInfo = selectedTree.GetComponent<ITreeInfoContent>();
-                SetTreeInfoContent(treeInfo);
-            }
-            else
-            {
-                treeInfoPopUpGroup.SetActive(false);
-                isTreeInfoOpen = false;
+                Debug.Log("pointer is over a UI element");
             }
         }
         else
