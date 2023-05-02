@@ -26,21 +26,26 @@ public class MainUIHandler : MonoBehaviour
     public Text questTitle;
     public Text questDescription;
     public Text questReward;
-
+    [Space]
     public QuestBoard questBoard;
 
-    public interface IQuestInfoContent
+    public void GoToNextQuest()
     {
-        string GetQuestTitle();
-        string GetQuestDescription();
-        string GetQuestReward();
+        questBoard.NextQuest();
+        SetQuestBoardContent();
     }
 
-    public void SetQuestBoardContent(IQuestInfoContent questInfo)
+    public void GoToPreviousQuest()
     {
-        questTitle.text = questInfo.GetQuestTitle();
-        questDescription.text = questInfo.GetQuestDescription();
-        questReward.text = questInfo.GetQuestReward();
+        questBoard.PrevQuest();
+        SetQuestBoardContent();
+    }
+
+    public void SetQuestBoardContent()
+    {
+        questTitle.text = questBoard.GetQuestTitle();
+        questDescription.text = questBoard.GetQuestDescription();
+        questReward.text = questBoard.GetQuestReward();
     }
 
     public interface ITreeInfoContent
@@ -61,7 +66,7 @@ public class MainUIHandler : MonoBehaviour
 
         treeInfoPopUpGroup.SetActive(false);
 
-        SetQuestBoardContent(questBoard.GetComponent<IQuestInfoContent>());
+        questBoardGroup.SetActive(false);
     }
 
     void Update()
@@ -102,6 +107,17 @@ public class MainUIHandler : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
+
+            if (hit.transform.CompareTag("QuestBoard"))
+            {
+                questBoardGroup.SetActive(true);
+                SetQuestBoardContent();
+            }
+            else
+            {
+                questBoardGroup.SetActive(false);
+            }
+
             //var tree = hit.collider.GetComponent<Tree>();
             selectedTree = hit.collider.GetComponent<Tree>();
 

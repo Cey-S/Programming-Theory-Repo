@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class QuestGenerator : MonoBehaviour
-{
-    private Quest quest = new Quest();
-
+{    
     public int rewardMultiplier = 10;
     public Item[] items;
 
@@ -29,6 +27,8 @@ public class QuestGenerator : MonoBehaviour
 
     public Quest GetQuest()
     {
+        Quest quest = new Quest(); // initialize empty quest to fill and return at the end
+
         int randomQuestType = Random.Range(0, 2);
         
         if (randomQuestType == 0)
