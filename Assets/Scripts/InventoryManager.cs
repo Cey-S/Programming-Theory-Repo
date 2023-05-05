@@ -14,7 +14,7 @@ public class InventoryManager : MonoBehaviour
 
     private void Start()
     {
-        InitializeInventoryCount();
+        inventoryCapacity = inventorySlots.Length;
         RefreshInventoryCount();
     }
 
@@ -28,8 +28,7 @@ public class InventoryManager : MonoBehaviour
             if (itemInSlot == null)
             {
                 SpawnNewItem(item, slot);
-                occupiedSlots++;
-                RefreshInventoryCount();
+                IncreaseItemCount();
 
                 return true;
             }
@@ -38,12 +37,32 @@ public class InventoryManager : MonoBehaviour
         return false;
     }
 
-    public void RemoveItem(InventoryItem inventoryItem)
+    public void ReturnItem(InventoryItem inventoryItem)
+    {
+        for (int i = 0; i < inventorySlots.Length; i++)
+        {
+            InventorySlot slot = inventorySlots[i];
+            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+            if (itemInSlot == null)
+            {
+                inventoryItem.transform.SetParent(slot.transform);
+                IncreaseItemCount();
+
+                return;
+            }
+        }
+    }
+
+    public void DecreaseItemCount()
     {
         occupiedSlots--;
-        RefreshInventoryCount();
+        RefreshInventoryCount(occupiedSlots);
+    }
 
-        Destroy(inventoryItem.gameObject);
+    public void IncreaseItemCount()
+    {
+        occupiedSlots++;
+        RefreshInventoryCount(occupiedSlots);
     }
 
     void SpawnNewItem(Item item, InventorySlot slot)
@@ -52,24 +71,24 @@ public class InventoryManager : MonoBehaviour
         InventoryItem inventoryItem = newItemGO.GetComponent<InventoryItem>();
         inventoryItem.InitialiseItem(item);
     }    
-
-    void InitializeInventoryCount()
+        
+    public void RefreshInventoryCount()
     {
-        int count = 0;
+        occupiedSlots = 0;
 
-        for (int i = 0; i < inventorySlots.Length; i++)
+        foreach (InventorySlot slot in inventorySlots)
         {
-            if (inventorySlots[i].GetComponentInChildren<InventoryItem>() != null)
+            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+            if (itemInSlot != null)
             {
-                count++;
+                occupiedSlots++;
             }
         }
 
-        occupiedSlots = count;
-        inventoryCapacity = inventorySlots.Length;
+        RefreshInventoryCount(occupiedSlots);
     }
 
-    void RefreshInventoryCount()
+    private void RefreshInventoryCount(int occupiedSlots)
     {
         inventoryCountText.text = $"{occupiedSlots} / {inventoryCapacity}";
     }

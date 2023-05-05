@@ -28,28 +28,7 @@ public class MainUIHandler : MonoBehaviour
     public Text questDescription;
     public Text questReward;
     [Space]
-    public QuestBoard questBoard;
-
-    public void GoToNextQuest()
-    {
-        questBoard.NextQuest();
-        SetQuestBoardContent();
-    }
-
-    public void GoToPreviousQuest()
-    {
-        questBoard.PrevQuest();
-        SetQuestBoardContent();
-    }
-
-    public void SetQuestBoardContent()
-    {
-        questTitle.text = questBoard.GetQuestTitle();
-        questDescription.text = questBoard.GetQuestDescription();
-        questReward.text = questBoard.GetQuestReward();
-
-        questBoard.RefreshItemSlots();
-    }
+    public QuestBoard questBoard;      
 
     public interface ITreeInfoContent
     {
@@ -88,21 +67,7 @@ public class MainUIHandler : MonoBehaviour
         {
             productCount.text = selectedTree.Inventory.Count == 0 ? "0" : selectedTree.Inventory[0].Count.ToString();
         }
-    }
-
-    public void InventoryButton()
-    {
-        if (!isInventoryOpen)
-        {
-            inventoryGroup.SetActive(true);
-            isInventoryOpen = true;
-        }
-        else
-        {
-            inventoryGroup.SetActive(false);
-            isInventoryOpen = false;
-        }
-    }
+    }  
 
     public void HandleSelection()
     {
@@ -150,6 +115,22 @@ public class MainUIHandler : MonoBehaviour
         }
     }
 
+    // INVENTORY
+    public void InventoryButton()
+    {
+        if (!isInventoryOpen)
+        {
+            inventoryGroup.SetActive(true);
+            isInventoryOpen = true;
+        }
+        else
+        {
+            inventoryGroup.SetActive(false);
+            isInventoryOpen = false;
+        }
+    }
+
+    // TREE INFO
     void SetTreeInfoContent(ITreeInfoContent treeInfo)
     {
         treeName.text = treeInfo.GetTreeName();
@@ -157,5 +138,27 @@ public class MainUIHandler : MonoBehaviour
         productionCapacity.text = treeInfo.GetProductionCapacity();
         productName.text = treeInfo.GetProductName();
         productIcon.sprite = treeInfo.GetProductIcon();
+    }
+
+    // QUEST BOARD
+    public void GoToNextQuest()
+    {
+        questBoard.NextQuest();
+        SetQuestBoardContent();
+    }
+
+    public void GoToPreviousQuest()
+    {
+        questBoard.PrevQuest();
+        SetQuestBoardContent();
+    }
+
+    public void SetQuestBoardContent()
+    {
+        questTitle.text = questBoard.GetQuestTitle();
+        questDescription.text = questBoard.GetQuestDescription();
+        questReward.text = questBoard.GetQuestReward();
+
+        questBoard.RefreshItemSlots();
     }
 }

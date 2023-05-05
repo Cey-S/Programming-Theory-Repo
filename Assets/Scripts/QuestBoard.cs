@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class QuestBoard : MonoBehaviour
 {
+    public InventoryManager playerInventory;
     public QuestGenerator generator;
 
     public InventorySlot[] itemDropSlots;
@@ -20,6 +21,7 @@ public class QuestBoard : MonoBehaviour
         currentQuest = 0;
     }
 
+    // Handles how many item drop slots should there be according to the active quest's need
     public void RefreshItemSlots()
     {
         int currentSlot = 0;
@@ -35,6 +37,21 @@ public class QuestBoard : MonoBehaviour
             }
 
             currentSlot++;
+        }
+    }
+
+    // When the player closes the quest board UI or navigates between quests,
+    // the items on the quest board slots return to player's inventory
+    public void ReturnItems()
+    {
+        foreach (InventorySlot slot in itemDropSlots)
+        {
+            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+            // if there is an item inside the slot, return it to player's inventory
+            if (itemInSlot != null)
+            {
+                playerInventory.ReturnItem(itemInSlot);
+            }
         }
     }
 
@@ -64,6 +81,8 @@ public class QuestBoard : MonoBehaviour
         {
             currentQuest = 0;
         }
+
+        ReturnItems();
     }
 
     public void PrevQuest()
@@ -77,5 +96,7 @@ public class QuestBoard : MonoBehaviour
         {
             currentQuest = quests.Count - 1;
         }
+
+        ReturnItems();
     }
 }
