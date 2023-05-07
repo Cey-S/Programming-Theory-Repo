@@ -51,6 +51,13 @@ public class InventoryManager : MonoBehaviour
                 return;
             }
         }
+    }    
+
+    void SpawnNewItem(Item item, InventorySlot slot)
+    {
+        GameObject newItemGO = Instantiate(inventoryItemPrefab, slot.transform);
+        InventoryItem inventoryItem = newItemGO.GetComponent<InventoryItem>();
+        inventoryItem.InitialiseItem(item);
     }
 
     public void DecreaseItemCount()
@@ -65,13 +72,6 @@ public class InventoryManager : MonoBehaviour
         RefreshInventoryCount(occupiedSlots);
     }
 
-    void SpawnNewItem(Item item, InventorySlot slot)
-    {
-        GameObject newItemGO = Instantiate(inventoryItemPrefab, slot.transform);
-        InventoryItem inventoryItem = newItemGO.GetComponent<InventoryItem>();
-        inventoryItem.InitialiseItem(item);
-    }    
-        
     public void RefreshInventoryCount()
     {
         occupiedSlots = 0;
@@ -91,5 +91,17 @@ public class InventoryManager : MonoBehaviour
     private void RefreshInventoryCount(int occupiedSlots)
     {
         inventoryCountText.text = $"{occupiedSlots} / {inventoryCapacity}";
+    }
+
+    private void OnEnable()
+    {
+        InventorySlot.onInventoryCountIncrease += IncreaseItemCount;
+        InventorySlot.onInventoryCountDecrease += DecreaseItemCount;
+    }
+
+    private void OnDisable()
+    {
+        InventorySlot.onInventoryCountIncrease -= IncreaseItemCount;
+        InventorySlot.onInventoryCountDecrease -= DecreaseItemCount;
     }
 }

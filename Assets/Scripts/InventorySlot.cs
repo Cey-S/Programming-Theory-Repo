@@ -5,9 +5,21 @@ using UnityEngine.EventSystems;
 
 public class InventorySlot : MonoBehaviour, IDropHandler
 {
-    public InventoryManager playerInventory;
+    public delegate void OnInventoryCountIncrease();
+    public static event OnInventoryCountIncrease onInventoryCountIncrease;
+
+    public delegate void OnInventoryCountDecrease();
+    public static event OnInventoryCountDecrease onInventoryCountDecrease;
 
     private Transform otherSlotParent;
+    private Transform currentSlotParent;
+    private bool isParentInventory;
+
+    private void Start()
+    {
+        currentSlotParent = transform.parent;
+        isParentInventory = currentSlotParent.CompareTag("Inventory");
+    }
 
     public void OnDrop(PointerEventData eventData)
     {
@@ -15,23 +27,23 @@ public class InventorySlot : MonoBehaviour, IDropHandler
         {
             InventoryItem inventoryItem = eventData.pointerDrag.GetComponent<InventoryItem>();
             otherSlotParent = inventoryItem.parentAfterDrag.parent;
-            inventoryItem.parentAfterDrag = transform;
 
             // if the item's grandparent changed between inventory and quest board 
-            if (!otherSlotParent.Equals(transform.parent))
+            if (!otherSlotParent.Equals(currentSlotParent))
             {
+                // if the item is dropped into the inventory slot
+                if (isParentInventory) 
+                {
+                    onInventoryCountIncrease?.Invoke();
+                }
                 // if the previous parent belongs to the inventory group
-                if (otherSlotParent.CompareTag("Inventory"))
+                else if (otherSlotParent.CompareTag("Inventory"))
                 {
-                    playerInventory.DecreaseItemCount();
+                    onInventoryCountDecrease?.Invoke();
                 }
-                else if (transform.parent.CompareTag("Inventory")) // if the item is dropped into the inventory slot
-                {
-                    playerInventory.IncreaseItemCount();
-                }
-
             }
 
+            inventoryItem.parentAfterDrag = transform;
         }
     }
 }
