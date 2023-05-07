@@ -55,6 +55,84 @@ public class QuestBoard : MonoBehaviour
         }
     }
 
+    public void SubmitItems()
+    {
+        if (IsQuestGoalReached())
+        {
+            Debug.Log("Quest Completed!");
+        }
+        else
+        {
+            Debug.Log("Insufficient Items...");
+            ReturnItems();
+        }
+    }
+
+    private bool IsQuestGoalReached()
+    {
+        bool result = false;
+
+        List<QuestItem> submittedItems = GetSubmittedItems();
+        if (submittedItems == null)
+        {
+            return false;
+        }
+
+        foreach (QuestItem questItem in quests[currentQuest].questItems)
+        {
+            int found = submittedItems.FindIndex(submittedItem => submittedItem.Name == questItem.Name);
+            if (found == -1)
+            {
+                return false;
+            }
+            else
+            {
+                result = submittedItems[found].Amount.Equals(questItem.Amount);
+
+                if(result == false)
+                {
+                    return false;
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private List<QuestItem> GetSubmittedItems()
+    {
+        List<QuestItem> submittedItems = new List<QuestItem>();
+        foreach (InventorySlot slot in itemDropSlots)
+        {
+            if (slot.gameObject.activeInHierarchy)
+            {
+                InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+                //empty slot means missing quest items, no need to continue => submission is null
+                if (itemInSlot == null) 
+                {
+                    return null;
+                }
+
+                int found = submittedItems.FindIndex(item => item.Name == itemInSlot.item.id);
+                //couldn't find an entry for that quest item name so we add a new one
+                if (found == -1)
+                {
+                    submittedItems.Add(new QuestItem()
+                    {
+                        Name = itemInSlot.item.id,
+                        Amount = 1
+                    });
+                }
+                else
+                {
+                    submittedItems[found].Amount += 1;
+                }
+            }
+        }
+
+        return submittedItems;
+    }
+
     public string GetQuestDescription()
     {
         return quests[currentQuest].description;

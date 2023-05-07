@@ -18,17 +18,4 @@ public class Quest
     public int coinReward;
     public List<QuestItem> questItems = new List<QuestItem>();
     public int totalSlotsNeeded;
-
-    public QuestGoal goal;
-}
-
-public class QuestGoal
-{
-    public GoalType type;
-}
-
-public enum GoalType
-{
-    FoodGathering,
-    WoodGathering
 }
