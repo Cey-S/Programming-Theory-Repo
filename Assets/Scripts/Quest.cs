@@ -15,7 +15,8 @@ public class Quest
     public string description = "I need ";
     public Sprite personAvatar;
     public string personName;
-    public int coinReward;
+    public int coinReward = 0;
     public List<QuestItem> questItems = new List<QuestItem>();
     public int totalSlotsNeeded;
+    public bool isCompleted = false;
 }

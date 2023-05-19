@@ -161,4 +161,14 @@ public class MainUIHandler : MonoBehaviour
 
         questBoard.RefreshItemSlots();
     }
+
+    private void OnEnable()
+    {
+        QuestBoard.SetNewQuestUI += SetQuestBoardContent;
+    }
+
+    private void OnDisable()
+    {
+        QuestBoard.SetNewQuestUI -= SetQuestBoardContent;
+    }
 }
