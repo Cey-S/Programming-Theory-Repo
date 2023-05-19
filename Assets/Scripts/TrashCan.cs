@@ -10,8 +10,11 @@ public class TrashCan : MonoBehaviour, IDropHandler
     public void OnDrop(PointerEventData eventData)
     {
         InventoryItem inventoryItem = eventData.pointerDrag.GetComponent<InventoryItem>();
-        inventoryItem.parentAfterDrag = transform;
+        if (inventoryItem.parentAfterDrag.parent.CompareTag("Inventory"))
+        {
+            inventoryManager.DecreaseItemCount();
+        }
 
-        inventoryManager.RemoveItem(inventoryItem);
+        Destroy(inventoryItem.gameObject);
     }
 }

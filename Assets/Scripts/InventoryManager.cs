@@ -8,14 +8,22 @@ public class InventoryManager : MonoBehaviour
     public InventorySlot[] inventorySlots;
     public GameObject inventoryItemPrefab;
 
+    public Text coinText;
+    private int totalCoin = 0;
+
     public Text inventoryCountText;
     private int occupiedSlots;
     private int inventoryCapacity;
 
     private void Start()
     {
-        InitializeInventoryCount();
+        inventoryCapacity = inventorySlots.Length;
         RefreshInventoryCount();
+    }
+    public void AddCoin(int coin)
+    {
+        totalCoin += coin;
+        coinText.text = totalCoin.ToString();
     }
 
     public bool AddItem(Item item)
@@ -28,8 +36,7 @@ public class InventoryManager : MonoBehaviour
             if (itemInSlot == null)
             {
                 SpawnNewItem(item, slot);
-                occupiedSlots++;
-                RefreshInventoryCount();
+                IncreaseItemCount();
 
                 return true;
             }
@@ -38,39 +45,71 @@ public class InventoryManager : MonoBehaviour
         return false;
     }
 
-    public void RemoveItem(InventoryItem inventoryItem)
+    public void ReturnItem(InventoryItem inventoryItem)
     {
-        occupiedSlots--;
-        RefreshInventoryCount();
+        for (int i = 0; i < inventorySlots.Length; i++)
+        {
+            InventorySlot slot = inventorySlots[i];
+            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+            if (itemInSlot == null)
+            {
+                inventoryItem.transform.SetParent(slot.transform);
+                IncreaseItemCount();
 
-        Destroy(inventoryItem.gameObject);
-    }
+                return;
+            }
+        }
+    }    
 
     void SpawnNewItem(Item item, InventorySlot slot)
     {
         GameObject newItemGO = Instantiate(inventoryItemPrefab, slot.transform);
         InventoryItem inventoryItem = newItemGO.GetComponent<InventoryItem>();
         inventoryItem.InitialiseItem(item);
-    }    
+    }
 
-    void InitializeInventoryCount()
+    public void DecreaseItemCount()
     {
-        int count = 0;
+        occupiedSlots--;
+        RefreshInventoryCount(occupiedSlots);
+    }
 
-        for (int i = 0; i < inventorySlots.Length; i++)
+    public void IncreaseItemCount()
+    {
+        occupiedSlots++;
+        RefreshInventoryCount(occupiedSlots);
+    }
+
+    public void RefreshInventoryCount()
+    {
+        occupiedSlots = 0;
+
+        foreach (InventorySlot slot in inventorySlots)
         {
-            if (inventorySlots[i].GetComponentInChildren<InventoryItem>() != null)
+            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+            if (itemInSlot != null)
             {
-                count++;
+                occupiedSlots++;
             }
         }
 
-        occupiedSlots = count;
-        inventoryCapacity = inventorySlots.Length;
+        RefreshInventoryCount(occupiedSlots);
     }
 
-    void RefreshInventoryCount()
+    private void RefreshInventoryCount(int occupiedSlots)
     {
         inventoryCountText.text = $"{occupiedSlots} / {inventoryCapacity}";
+    }
+
+    private void OnEnable()
+    {
+        InventorySlot.onInventoryCountIncrease += IncreaseItemCount;
+        InventorySlot.onInventoryCountDecrease += DecreaseItemCount;
+    }
+
+    private void OnDisable()
+    {
+        InventorySlot.onInventoryCountIncrease -= IncreaseItemCount;
+        InventorySlot.onInventoryCountDecrease -= DecreaseItemCount;
     }
 }

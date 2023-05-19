@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Pizza
   m_EditorClassIdentifier: 
   id: Pizza
-  type: 0
+  type: 1
   image: {fileID: 21300000, guid: 649591bcb03f76e48b7a5deb32f14b44, type: 3}
   prefab: {fileID: 100000, guid: 06cdf427476835b42837c1ca7f8cdbd1, type: 3}
   stackable: 0
