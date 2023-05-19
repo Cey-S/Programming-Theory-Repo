@@ -8,6 +8,9 @@ public class InventoryManager : MonoBehaviour
     public InventorySlot[] inventorySlots;
     public GameObject inventoryItemPrefab;
 
+    public Text coinText;
+    private int totalCoin = 0;
+
     public Text inventoryCountText;
     private int occupiedSlots;
     private int inventoryCapacity;
@@ -16,6 +19,11 @@ public class InventoryManager : MonoBehaviour
     {
         inventoryCapacity = inventorySlots.Length;
         RefreshInventoryCount();
+    }
+    public void AddCoin(int coin)
+    {
+        totalCoin += coin;
+        coinText.text = totalCoin.ToString();
     }
 
     public bool AddItem(Item item)

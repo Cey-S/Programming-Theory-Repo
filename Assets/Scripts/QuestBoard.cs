@@ -86,6 +86,8 @@ public class QuestBoard : MonoBehaviour
         if (IsQuestGoalReached())
         {
             quests[currentQuest].isCompleted = true;
+            playerInventory.AddCoin(quests[currentQuest].coinReward);
+
             quests.RemoveAt(currentQuest);
             if (!quests.Any()) // if there is no quest left
             {

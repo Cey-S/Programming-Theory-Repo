@@ -644,6 +644,7 @@ MonoBehaviour:
   - {fileID: 49076357}
   - {fileID: 39094956}
   inventoryItemPrefab: {fileID: 5510295408816217521, guid: 2244c0ec072c3e847aa0e6d8309da12b, type: 3}
+  coinText: {fileID: 1627026341}
   inventoryCountText: {fileID: 2041539097}
 --- !u!4 &235176112
 Transform:
