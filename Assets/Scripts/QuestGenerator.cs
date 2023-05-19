@@ -7,6 +7,11 @@ public class QuestGenerator : MonoBehaviour
     public int rewardMultiplier = 10;
     public Item[] items;
 
+    public Sprite[] femaleAvatars;
+    public string[] femaleNames;
+    public Sprite[] maleAvatars;
+    public string[] maleNames;
+
     private List<string> woodItems = new List<string>();
     private List<string> foodItems = new List<string>();
 
@@ -33,38 +38,54 @@ public class QuestGenerator : MonoBehaviour
         
         if (randomQuestType == 0)
         {
-            //quest.goal.type = GoalType.WoodGathering;
-
             // Set title
             quest.title = "Wood Needed!";
 
             // Set quest items
-            GenerateQuestItems(quest, woodItems, 6);
-
-            // Set description
-            GenerateQuestDescription(quest);
-
-            // Set reward
-            GenerateQuestReward(quest);
+            GenerateQuestItems(quest, woodItems, 6);            
         }
         else
         {
-            //quest.goal.type = GoalType.FoodGathering;
-            
             // Set title
             quest.title = "Food Needed!";
 
             // Set quest items
             GenerateQuestItems(quest, foodItems, 4);
-
-            // Set description
-            GenerateQuestDescription(quest);
-
-            // Set reward
-            GenerateQuestReward(quest);
         }
 
+        // Set description
+        GenerateQuestDescription(quest);
+
+        // Set reward
+        GenerateQuestReward(quest);
+
+        // Set person avatar and name
+        GeneratePersonAvatarAndName(quest);
+
         return quest; // return now filled quest
+    }
+
+    private void GeneratePersonAvatarAndName(Quest quest)
+    {
+        int randomPerson = Random.Range(0, 2);
+
+        if (randomPerson == 0) // Female
+        {
+            int randomAvatar = Random.Range(0, femaleAvatars.Length);
+            quest.personAvatar = femaleAvatars[randomAvatar];
+
+            int randomName = Random.Range(0, femaleNames.Length);
+            quest.personName = femaleNames[randomName];
+        }
+        else // Male
+        {
+            int randomAvatar = Random.Range(0, maleAvatars.Length);
+            quest.personAvatar = maleAvatars[randomAvatar];
+
+            int randomName = Random.Range(0, maleNames.Length);
+            quest.personName = maleNames[randomName];
+        }
+
     }
 
     private void GenerateQuestReward(Quest quest)

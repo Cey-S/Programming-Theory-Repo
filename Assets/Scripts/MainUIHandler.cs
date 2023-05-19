@@ -27,6 +27,8 @@ public class MainUIHandler : MonoBehaviour
     public Text questTitle;
     public Text questDescription;
     public Text questReward;
+    public Image personAvatar;
+    public Text personName;
     [Space]
     public QuestBoard questBoard;      
 
@@ -158,6 +160,8 @@ public class MainUIHandler : MonoBehaviour
         questTitle.text = questBoard.GetQuestTitle();
         questDescription.text = questBoard.GetQuestDescription();
         questReward.text = questBoard.GetQuestReward();
+        personAvatar.sprite = questBoard.GetPersonAvatar();
+        personName.text = questBoard.GetPersonName();
 
         questBoard.RefreshItemSlots();
     }

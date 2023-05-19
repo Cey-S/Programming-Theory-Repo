@@ -20,7 +20,7 @@ public class QuestBoard : MonoBehaviour
     {
         quests.Add(generator.GetQuest());
         quests.Add(generator.GetQuest());
-        //quests.Add(generator.GetQuest());
+        quests.Add(generator.GetQuest());
 
         currentQuest = 0;
     }
@@ -202,6 +202,23 @@ public class QuestBoard : MonoBehaviour
         return quests[currentQuest].title;
     }
 
+    public Sprite GetPersonAvatar()
+    {
+        if (currentQuest == -1)
+        {
+            return null;
+        }
+        return quests[currentQuest].personAvatar;
+    }
+
+    public string GetPersonName()
+    {
+        if (currentQuest == -1)
+        {
+            return "";
+        }
+        return quests[currentQuest].personName;
+    }
     public void NextQuest()
     {
         if (!quests.Any()) // if there is no quest available, return
