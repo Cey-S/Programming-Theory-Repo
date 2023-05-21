@@ -30,7 +30,11 @@ public class MainUIHandler : MonoBehaviour
     public Image personAvatar;
     public Text personName;
     [Space]
-    public QuestBoard questBoard;      
+    public QuestBoard questBoard;
+
+    [Header("Animations")]
+    public Text itemsSubmitText;
+    private Animator animator_IST;
 
     public interface ITreeInfoContent
     {
@@ -42,7 +46,7 @@ public class MainUIHandler : MonoBehaviour
 
         //string GetProductCount();
     }
-    
+
     void Start()
     {
         inventoryGroup.SetActive(false);
@@ -51,6 +55,8 @@ public class MainUIHandler : MonoBehaviour
         treeInfoPopUpGroup.SetActive(false);
 
         questBoardGroup.SetActive(false);
+
+        animator_IST = itemsSubmitText.GetComponent<Animator>();
     }
 
     void Update()
@@ -69,7 +75,7 @@ public class MainUIHandler : MonoBehaviour
         {
             productCount.text = selectedTree.Inventory.Count == 0 ? "0" : selectedTree.Inventory[0].Count.ToString();
         }
-    }  
+    }
 
     public void HandleSelection()
     {
@@ -166,13 +172,30 @@ public class MainUIHandler : MonoBehaviour
         questBoard.RefreshItemSlots();
     }
 
+    private void PlayItemsSubmitAnim(bool state)
+    {
+        if (state)
+        {
+            itemsSubmitText.text = "Quest Completed!";
+        }
+        else
+        {
+            itemsSubmitText.text = "Insufficient Items...";
+        }
+        
+        animator_IST.enabled = true;
+        animator_IST.Play("SubmitItems", 0, 0.0f);
+    }
+
     private void OnEnable()
     {
         QuestBoard.SetNewQuestUI += SetQuestBoardContent;
+        QuestBoard.SubmitQuestItems += PlayItemsSubmitAnim;
     }
 
     private void OnDisable()
     {
         QuestBoard.SetNewQuestUI -= SetQuestBoardContent;
+        QuestBoard.SubmitQuestItems -= PlayItemsSubmitAnim;
     }
 }

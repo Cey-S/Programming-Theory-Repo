@@ -16,6 +16,9 @@ public class QuestBoard : MonoBehaviour
     public delegate void OnQuestComplete();
     public static event OnQuestComplete SetNewQuestUI;
 
+    public delegate void OnSubmitItems(bool result);
+    public static event OnSubmitItems SubmitQuestItems;
+
     private void Start()
     {
         quests.Add(generator.GetQuest());
@@ -101,11 +104,15 @@ public class QuestBoard : MonoBehaviour
 
             ClearSlotItems();
             SetNewQuestUI?.Invoke();
+
             Debug.Log("Quest Completed!");
+            SubmitQuestItems?.Invoke(true);
         }
         else
         {
             Debug.Log("Insufficient Items...");
+            SubmitQuestItems?.Invoke(false);
+
             ReturnItems();
         }
     }
