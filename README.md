@@ -14,9 +14,9 @@
   
 ---
 
-💖 You can find the **gameplay video** here 👉 [![Unity](https://img.shields.io/badge/unity_learn-%23000000.svg?style=for-the-badge&logo=unity&logoColor=white)](https://learn.unity.com/submission/648489b0edbc2a2e45f3aece)  
+### 💖 You can find the **gameplay video** here 👉 [![Unity](https://img.shields.io/badge/unity_learn-%23000000.svg?style=for-the-badge&logo=unity&logoColor=white)](https://learn.unity.com/submission/648489b0edbc2a2e45f3aece)  
 
-💖 You can also **play the game** here 👉 [![Unity](https://img.shields.io/badge/unity_play-%23000000.svg?style=for-the-badge&logo=unity&logoColor=white)](https://play.unity.com/mg/other/webgl-builds-360642)  
+### 💖 You can also **play the game** here 👉 [![Unity](https://img.shields.io/badge/unity_play-%23000000.svg?style=for-the-badge&logo=unity&logoColor=white)](https://play.unity.com/mg/other/webgl-builds-360642)  
 
 ---
 
